@@ -31,12 +31,12 @@ export default function Navigation() {
               >
                 Profil
               </Link>
-              {session.user?.roles?.includes("admin") && (
+              {session.user?.roles?.includes("Admin") && (
                 <Link
                   href="/admin"
                   className="text-white/80 hover:text-white transition-colors duration-200"
                 >
-                  Admin
+                  Admin Panel
                 </Link>
               )}
               <div className="flex items-center space-x-2">

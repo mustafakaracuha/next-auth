@@ -20,7 +20,7 @@ export async function middleware(req: NextRequest) {
   if (pathname.startsWith("/admin")) {
     const roles: string[] = Array.isArray(token?.roles) ? token?.roles : [];
 
-    if (!roles.includes("admin")) {
+    if (!roles.includes("Admin")) {
       const unauthorizedUrl = req.nextUrl.clone();
       unauthorizedUrl.pathname = "/unauthorized";
       return NextResponse.redirect(unauthorizedUrl);
