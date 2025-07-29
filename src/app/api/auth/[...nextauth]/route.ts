@@ -2,6 +2,12 @@ import NextAuth from "next-auth";
 import Auth0Provider from "next-auth/providers/auth0";
 
 declare module "next-auth" {
+  interface JWT {
+    roles?: string[];
+    accessToken?: string;
+    id?: string;
+  }
+
   interface Session {
     accessToken?: string;
     user: {
@@ -9,7 +15,13 @@ declare module "next-auth" {
       name?: string | null;
       email?: string | null;
       image?: string | null;
+      roles?: string[];
     };
+  }
+
+  interface Profile {
+    "https://myapp.example.com/roles"?: string[] | string;
+    [key: string]: unknown;
   }
 }
 
@@ -30,14 +42,26 @@ const handler = NextAuth({
       if (account && user) {
         token.accessToken = account.access_token;
         token.id = user.id;
+
+        const roles = profile?.["https://myapp.example.com/roles"];
+        if (roles) {
+          token.roles = Array.isArray(roles) ? roles : [roles];
+        }
       }
       return token;
     },
+
     async session({ session, token }) {
-      session.accessToken =
-        typeof token.accessToken === "string" ? token.accessToken : undefined;
-      session.user.id = typeof token.id === "string" ? token.id : undefined;
-      return session;
+      return {
+        ...session,
+        accessToken:
+          typeof token.accessToken === "string" ? token.accessToken : undefined,
+        user: {
+          ...session.user,
+          id: typeof token.id === "string" ? token.id : undefined,
+          roles: token.roles ?? [],
+        },
+      };
     },
   },
 });

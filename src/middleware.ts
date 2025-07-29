@@ -7,12 +7,24 @@ const secret = process.env.NEXTAUTH_SECRET;
 export async function middleware(req: NextRequest) {
   // Oturum bilgisini JWT tokenından alıyoruz
   const token = await getToken({ req, secret });
+  const { pathname } = req.nextUrl;
 
   // Eğer token yoksa, giriş sayfasına yönlendiriyoruz
   if (req.nextUrl.pathname === "/") {
     const url = req.nextUrl.clone();
     url.pathname = "/login";
     return NextResponse.redirect(url);
+  }
+
+  // Yalnızca admin rolü olanlar /admin'e erişebilsin
+  if (pathname.startsWith("/admin")) {
+    const roles: string[] = Array.isArray(token?.roles) ? token?.roles : [];
+
+    if (!roles.includes("admin")) {
+      const unauthorizedUrl = req.nextUrl.clone();
+      unauthorizedUrl.pathname = "/unauthorized";
+      return NextResponse.redirect(unauthorizedUrl);
+    }
   }
 
   // Giriş yapılmamışsa (token yoksa), giriş sayfasına yönlendir
@@ -33,5 +45,11 @@ export async function middleware(req: NextRequest) {
 
 // Middleware sadece belirli sayfalarda çalışsın (opsiyonel)
 export const config = {
-  matcher: ["/protected/:path*", "/profile", "/dashboard", "/"],
+  matcher: [
+    "/protected/:path*",
+    "/profile",
+    "/dashboard",
+    "/",
+    "/admin/:path*",
+  ],
 };

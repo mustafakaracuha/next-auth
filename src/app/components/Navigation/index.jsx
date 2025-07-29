@@ -31,23 +31,33 @@ export default function Navigation() {
               >
                 Profil
               </Link>
-              <span className="text-white">{session?.user?.name}</span>
-              {session?.user?.image && (
-                <Image
-                  src={session.user.image}
-                  alt={session.user.name || "Kullanıcı"}
-                  width={36}
-                  height={36}
-                  className="rounded-full border-2 border-white shadow-sm"
-                />
+              {session.user?.roles?.includes("admin") && (
+                <Link
+                  href="/admin"
+                  className="text-white/80 hover:text-white transition-colors duration-200"
+                >
+                  Admin
+                </Link>
               )}
+              <div className="flex items-center space-x-2">
+                <span className="text-white">{session?.user?.name}</span>
+                {session?.user?.image && (
+                  <Image
+                    src={session.user.image}
+                    alt={session.user.name || "Kullanıcı"}
+                    width={36}
+                    height={36}
+                    className="rounded-full border-2 border-white shadow-sm"
+                  />
+                )}
 
-              <button
-                onClick={() => signOut({ callbackUrl: "/login" })}
-                className="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg transition-all duration-200"
-              >
-                Çıkış
-              </button>
+                <button
+                  onClick={() => signOut({ callbackUrl: "/login" })}
+                  className="bg-white/20 ml-3 hover:bg-white/30 text-white px-4 py-2 rounded-lg transition-all duration-200"
+                >
+                  Çıkış
+                </button>
+              </div>
             </div>
           )}
 
