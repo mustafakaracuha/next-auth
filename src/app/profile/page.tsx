@@ -88,7 +88,7 @@ export default function Profile() {
           <div className="lg:col-span-1">
             <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 text-center">
               {/* Avatar */}
-              <div className="mx-auto mb-6 w-32 h-32 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 p-1 shadow-2xl">
+              <div className="mx-auto mb-6 w-32 h-32 rounded-full bg-gradient-to-r from-white to-gray-400 p-1 shadow-2xl">
                 <div className="w-full h-full rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center text-5xl font-bold text-white">
                   {session.user?.image ? (
                     <img

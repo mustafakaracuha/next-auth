@@ -249,7 +249,7 @@ export default function Page() {
         )}
 
         <footer className="relative z-10 mt-16 text-white/40 text-sm select-none">
-          &copy; {new Date().getFullYear()} NextAuth Demo & Mustafa Karacuha
+          &copy; {new Date().getFullYear()} NextAuth Demo
         </footer>
       </main>
     </>
