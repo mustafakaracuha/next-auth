@@ -3,6 +3,7 @@
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
+import Navigation from "../components/Navigation";
 
 export default function Profile() {
   const { data: session, status } = useSession();
@@ -71,38 +72,7 @@ export default function Profile() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
       {/* Navigation */}
-      <nav className="bg-white/10 backdrop-blur-lg border-b border-white/20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <Link href="/" className="text-white font-bold text-xl">
-              NextAuth Demo
-            </Link>
-            <div className="flex items-center space-x-4">
-              <Link
-                href="/dashboard"
-                className="text-white/60 hover:text-white"
-              >
-                Dashboard
-              </Link>
-              <Link
-                href="/profile"
-                className="text-white/80 hover:text-white transition-colors duration-200"
-              >
-                Profil
-              </Link>
-              <Link href="/" className="text-white/60 hover:text-white">
-                Ana Sayfa
-              </Link>
-              <button
-                onClick={() => signOut()}
-                className="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg transition-all duration-200"
-              >
-                Çıkış
-              </button>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <Navigation />
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}

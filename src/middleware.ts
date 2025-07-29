@@ -8,6 +8,7 @@ export async function middleware(req: NextRequest) {
   // Oturum bilgisini JWT tokenından alıyoruz
   const token = await getToken({ req, secret });
 
+  // Eğer token yoksa, giriş sayfasına yönlendiriyoruz
   if (req.nextUrl.pathname === "/") {
     const url = req.nextUrl.clone();
     url.pathname = "/login";
