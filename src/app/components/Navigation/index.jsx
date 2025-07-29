@@ -43,7 +43,7 @@ export default function Navigation() {
               )}
 
               <button
-                onClick={() => signOut()}
+                onClick={() => signOut({ callbackUrl: "/login" })}
                 className="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg transition-all duration-200"
               >
                 Çıkış
@@ -86,7 +86,7 @@ export default function Navigation() {
               Profil
             </Link>
             <button
-              onClick={() => signOut()}
+              onClick={() => signOut({ callbackUrl: "/login" })}
               className="block w-full text-left px-3 py-2 text-white/80"
             >
               Çıkış
