@@ -17,7 +17,7 @@ export default function Page() {
   return (
     <>
       {/* Navigation */}
-      <Navigation />
+      {session && session.user && <Navigation />}
 
       {/* Main Content */}
       <main className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex flex-col items-center justify-center px-6 pt-16">
@@ -37,7 +37,7 @@ export default function Page() {
           ) : session ? (
             <>
               {/* Avatar */}
-              <div className="mx-auto mb-8 w-32 h-32 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 p-1 shadow-2xl">
+              <div className="mx-auto mb-6 w-32 h-32 rounded-full bg-gradient-to-r from-white to-gray-400 p-1 shadow-2xl">
                 <div className="w-full h-full rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center text-5xl font-bold text-white">
                   {session.user?.image ? (
                     <img
@@ -63,52 +63,58 @@ export default function Page() {
 
               {/* Quick Actions */}
               <div className="grid grid-cols-1 gap-4 mb-8">
-                <Link
-                  href="/dashboard"
-                  className="group bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-6 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
-                >
-                  <div className="flex items-center justify-center space-x-2">
-                    <svg
-                      className="w-5 h-5"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
+                {session.user?.roles?.includes("User") && (
+                  <>
+                    <Link
+                      href="/dashboard"
+                      className="group bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-6 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-                      />
-                    </svg>
-                    <span>Dashboard'a Git</span>
-                  </div>
-                </Link>
+                      <div className="flex items-center justify-center space-x-2">
+                        <svg
+                          className="w-5 h-5"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+                          />
+                        </svg>
+                        <span>Dashboard'a Git</span>
+                      </div>
+                    </Link>
 
-                <Link
-                  href="/profile"
-                  className="group bg-white/10 hover:bg-white/20 text-white px-6 py-4 rounded-xl font-semibold transition-all duration-300 border border-white/20 hover:border-white/40"
-                >
-                  <div className="flex items-center justify-center space-x-2">
-                    <svg
-                      className="w-5 h-5"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
+                    <Link
+                      href="/profile"
+                      className="group bg-white/10 hover:bg-white/20 text-white px-6 py-4 rounded-xl font-semibold transition-all duration-300 border border-white/20 hover:border-white/40"
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                      />
-                    </svg>
-                    <span>Profili Görüntüle</span>
-                  </div>
-                </Link>
+                      <div className="flex items-center justify-center space-x-2">
+                        <svg
+                          className="w-5 h-5"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                          />
+                        </svg>
+                        <span>Profili Görüntüle</span>
+                      </div>
+                    </Link>
+                  </>
+                )}
+
+                {/* Admin Link */}
                 {session.user?.roles?.includes("Admin") && (
                   <Link
-                    href="/settings"
+                    href="/admin"
                     className="group bg-white/10 hover:bg-white/20 text-white px-6 py-4 rounded-xl font-semibold transition-all duration-300 border border-white/20 hover:border-white/40"
                   >
                     <div className="flex items-center justify-center space-x-2">

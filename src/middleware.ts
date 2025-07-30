@@ -9,6 +9,9 @@ export async function middleware(req: NextRequest) {
   const token = await getToken({ req, secret });
   const { pathname } = req.nextUrl;
 
+  console.log(token, "Token:", pathname, "Pathname:", req.nextUrl);
+  
+
   // Eğer token yoksa, giriş sayfasına yönlendiriyoruz
   if (req.nextUrl.pathname === "/") {
     const url = req.nextUrl.clone();
@@ -26,18 +29,28 @@ export async function middleware(req: NextRequest) {
       return NextResponse.redirect(unauthorizedUrl);
     }
   }
+  // Yalnızca user rolü olanlar /profile ve /dashboard'a erişebilsin
+  if (pathname.startsWith("/profile") || pathname.startsWith("/dashboard")) {
+    const roles: string[] = Array.isArray(token?.roles) ? token?.roles : [];
 
-  // Giriş yapılmamışsa (token yoksa), giriş sayfasına yönlendir
-  if (!token) {
-    // Giriş yapılması gereken sayfaya gidiliyorsa
-    if (req.nextUrl.pathname.startsWith("/protected")) {
-      // Giriş sayfasına yönlendir (callbackUrl ile geri dönebilir)
-      const url = req.nextUrl.clone();
-      url.pathname = "/login"; // Giriş sayfanızın yolu
-      url.searchParams.set("callbackUrl", req.nextUrl.pathname);
-      return NextResponse.redirect(url);
+    if (!roles.includes("User")) {
+      const unauthorizedUrl = req.nextUrl.clone();
+      unauthorizedUrl.pathname = "/unauthorized";
+      return NextResponse.redirect(unauthorizedUrl);
     }
   }
+
+  // // Giriş yapılmamışsa (token yoksa), giriş sayfasına yönlendir
+  // if (!token) {
+  //   // Giriş yapılması gereken sayfaya gidiliyorsa
+  //   if (req.nextUrl.pathname.startsWith("/protected")) {
+  //     // Giriş sayfasına yönlendir (callbackUrl ile geri dönebilir)
+  //     const url = req.nextUrl.clone();
+  //     url.pathname = "/login"; // Giriş sayfanızın yolu
+  //     url.searchParams.set("callbackUrl", req.nextUrl.pathname);
+  //     return NextResponse.redirect(url);
+  //   }
+  // }
 
   // Token varsa veya korumasız sayfa ise isteği olduğu gibi geçir
   return NextResponse.next();
@@ -45,11 +58,5 @@ export async function middleware(req: NextRequest) {
 
 // Middleware sadece belirli sayfalarda çalışsın (opsiyonel)
 export const config = {
-  matcher: [
-    "/protected/:path*",
-    "/profile",
-    "/dashboard",
-    "/",
-    "/admin/:path*",
-  ],
+  matcher: ["/profile", "/dashboard", "/", "/admin/:path*"],
 };

@@ -2,51 +2,244 @@
 
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { ShieldUser, Sparkles } from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
+import {
+  Users,
+  Settings,
+  Database,
+  Shield,
+  Plus,
+  Activity,
+  TrendingUp,
+  AlertTriangle,
+  Lock,
+} from "lucide-react";
 import Navigation from "../components/Navigation";
 
 export default function AdminPage() {
   const { data: session } = useSession();
-  const user = session?.user;
+  const [activeTab, setActiveTab] = useState("dashboard");
 
-  const role = user?.roles && user.roles.length > 0 ? user.roles[0].toUpperCase() : "USER";
+  const user = session?.user;
+  const role =
+    user?.roles && user.roles.length > 0
+      ? user.roles[0].toUpperCase()
+      : "ADMIN";
+
+  const stats = [
+    {
+      label: "Toplam Kullanıcı",
+      value: "2,847",
+      change: "+12%",
+      positive: true,
+      icon: Users,
+    },
+    {
+      label: "Aktif Oturumlar",
+      value: "1,234",
+      change: "+8%",
+      positive: true,
+      icon: Activity,
+    },
+    {
+      label: "Güvenlik Olayları",
+      value: "23",
+      change: "-15%",
+      positive: true,
+      icon: Shield,
+    },
+    {
+      label: "Sistem Sağlığı",
+      value: "99.9%",
+      change: "+0.1%",
+      positive: true,
+      icon: TrendingUp,
+    },
+  ];
+
+  const recentActivities = [
+    {
+      action: "Yeni kullanıcı kaydı",
+      user: "john.doe@example.com",
+      time: "2 dakika önce",
+      type: "success",
+    },
+    {
+      action: "Başarısız giriş denemesi",
+      user: "suspicious@email.com",
+      time: "5 dakika önce",
+      type: "warning",
+    },
+    {
+      action: "Sistem güncellemesi",
+      user: "System",
+      time: "1 saat önce",
+      type: "info",
+    },
+    {
+      action: "Kullanıcı silindi",
+      user: "old.user@example.com",
+      time: "2 saat önce",
+      type: "danger",
+    },
+  ];
+
+  const quickActions = [
+    {
+      title: "Kullanıcı Ekle",
+      icon: Plus,
+      color: "bg-blue-500",
+      href: "/admin/users/add",
+    },
+    {
+      title: "Sistem Ayarları",
+      icon: Settings,
+      color: "bg-purple-500",
+      href: "/admin/settings",
+    },
+    {
+      title: "Güvenlik Raporu",
+      icon: Shield,
+      color: "bg-green-500",
+      href: "/admin/security",
+    },
+    {
+      title: "Yedekleme",
+      icon: Database,
+      color: "bg-orange-500",
+      href: "/admin/backup",
+    },
+  ];
+
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case "dashboard":
+        return (
+          <div className="space-y-8">
+            {/* Stats Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {stats.map((stat, index) => (
+                <div
+                  key={index}
+                  className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 hover:bg-white/15 transition-all duration-300"
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <div
+                      className={`w-12 h-12 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center`}
+                    >
+                      <stat.icon className="w-6 h-6 text-white" />
+                    </div>
+                    <span
+                      className={`text-xs px-2 py-1 rounded-full ${
+                        stat.positive
+                          ? "text-green-400 bg-green-400/20"
+                          : "text-red-400 bg-red-400/20"
+                      }`}
+                    >
+                      {stat.change}
+                    </span>
+                  </div>
+                  <h3 className="text-white/80 text-sm font-medium mb-1">
+                    {stat.label}
+                  </h3>
+                  <p className="text-3xl font-bold text-white">{stat.value}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Quick Actions */}
+            <div>
+              <h2 className="text-2xl font-bold text-white mb-6">
+                Hızlı İşlemler
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {quickActions.map((action, index) => (
+                  <Link key={index} href={action.href} className="group">
+                    <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 hover:bg-white/15 transition-all duration-300 cursor-pointer group-hover:scale-105">
+                      <div
+                        className={`w-12 h-12 ${action.color} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}
+                      >
+                        <action.icon className="w-6 h-6 text-white" />
+                      </div>
+                      <h3 className="text-white font-semibold">
+                        {action.title}
+                      </h3>
+                      <p className="text-white/60 text-sm mt-1">Hızlı erişim</p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* Recent Activities */}
+            <div>
+              <h2 className="text-2xl font-bold text-white mb-6">
+                Son Aktiviteler
+              </h2>
+              <div className="bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20">
+                <div className="p-6">
+                  <div className="space-y-4">
+                    {recentActivities.map((activity, index) => (
+                      <div
+                        key={index}
+                        className="flex items-center space-x-4 p-4 bg-white/5 rounded-lg hover:bg-white/10 transition-colors"
+                      >
+                        <div
+                          className={`w-3 h-3 rounded-full ${
+                            activity.type === "success"
+                              ? "bg-green-400"
+                              : activity.type === "warning"
+                              ? "bg-yellow-400"
+                              : activity.type === "danger"
+                              ? "bg-red-400"
+                              : "bg-blue-400"
+                          }`}
+                        ></div>
+                        <div className="flex-1">
+                          <p className="text-white text-sm">
+                            {activity.action}
+                          </p>
+                          <p className="text-white/60 text-xs">
+                            {activity.user} • {activity.time}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+    }
+  };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+      {/* Navigation */}
       <Navigation />
 
-      <div className="bg-white/10 backdrop-blur-xl p-8 rounded-2xl shadow-2xl text-center max-w-md w-full border border-white/20 animate-fade-in">
-        <div className="flex flex-col items-center mb-6 space-y-3">
-          {user?.image && (
-            <Image
-              src={user.image}
-              alt={user.name || "Kullanıcı"}
-              width={72}
-              height={72}
-              className="rounded-full border-2 border-purple-300 shadow-md"
-            />
-          )}
-          <h1 className="text-white text-3xl font-bold flex items-center gap-2">
-            <ShieldUser className="w-6 h-6 text-green-300" />
-            Admin Paneli
-          </h1>
-          <p className="text-white/60 text-sm">Yetkili kullanıcı girişi</p>
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        {/* Welcome Section */}
+        <div className="mb-8">
+          <div className="flex items-center gap-4">
+            <h1 className="text-4xl font-bold text-white mb-2">Admin Panel</h1>
+            <div className="bg-green-500/20 text-green-400 px-3 py-1 rounded-full text-xs">
+              {role}
+            </div>
+          </div>
+
+          <p className="text-white/70">
+            Admin paneline hoşgeldiniz. Sistem durumunu kontrol edin ve yönetim
+            işlemlerini gerçekleştirin.
+          </p>
         </div>
 
-        <div className="text-white/90 text-lg mb-4">
-          Merhaba, <span className="font-semibold">{user?.name}</span>
-        </div>
-        <div className="text-white/60 text-sm mb-6">{user?.email}</div>
-
-        <div className="inline-block bg-green-500/10 text-green-300 px-4 py-1 rounded-full text-sm font-medium border border-green-400/30 shadow-sm">
-          Rol: {role}
-        </div>
-
-        <div className="mt-8 text-white/40 text-xs flex justify-center items-center gap-1">
-          <Sparkles className="w-4 h-4" />
-          Güvenli yönetim paneli
-        </div>
+        {/* Tab Content */}
+        {renderTabContent()}
       </div>
-    </main>
+    </div>
   );
 }
