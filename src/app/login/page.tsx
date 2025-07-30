@@ -153,7 +153,7 @@ export default function Page() {
               </div>
 
               <button
-                onClick={() => signIn()}
+                onClick={() => signIn("auth0")}
                 className="group w-full py-4 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
               >
                 <div className="flex items-center justify-center space-x-2">
@@ -173,7 +173,6 @@ export default function Page() {
                   <span>Giriş Yap</span>
                 </div>
               </button>
-
               <div className="mt-8 pt-8 border-t border-white/10">
                 <p className="text-white/50 text-sm">
                   Güvenli ve hızlı giriş için NextAuth kullanıyoruz
