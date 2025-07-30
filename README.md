@@ -1,36 +1,146 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🛡️ Next.js + Auth0 OAuth2.0 + JWT Kimlik Doğrulama Sistemi
 
-## Getting Started
+Güvenli, ölçeklenebilir ve taşınabilir bir kimlik doğrulama & yetkilendirme sistemi.
 
-First, run the development server:
+---
+
+## 🚀 Özellikler
+
+✅ Auth0 ile OAuth2.0 entegrasyonu  
+✅ JWT tabanlı oturum yönetimi  
+✅ Middleware ile role-based yetkilendirme  
+✅ Next.js 14+ App Router kullanımı  
+✅ SOLID prensiplerine uygun modüler yapı  
+✅ 12Factor App uyumlu yapılandırma (.env)  
+✅ TailwindCSS ile responsive login UI  
+✅ TypeScript ile güvenli kod  
+✅ Git branching: `dev/v1.0.0` → `prod/v1.0.0`
+
+---
+
+## 🧱 Teknolojiler
+
+| Teknoloji       | Açıklama                              |
+|----------------|----------------------------------------|
+| [Next.js 14+](https://nextjs.org) | Modern React tabanlı framework        |
+| [Auth0](https://auth0.com)       | OAuth2.0 sağlayıcısı                  |
+| [NextAuth.js](https://next-auth.js.org) | Kimlik doğrulama kütüphanesi          |
+| [JWT](https://jwt.io/)           | JSON Web Token tabanlı oturum yönetimi |
+| [TailwindCSS](https://tailwindcss.com) | UI tasarımı için yardımcı sınıflar     |
+| TypeScript       | Tip güvenliği için statik dil         |
+| Git / GitHub     | Sürüm kontrol ve iş birliği          |
+
+---
+
+## 📁 Proje Yapısı
+
+```
+
+.
+├── app/
+│   ├── login/
+│   ├── dashboard/
+│   ├── admin/
+│   └── not-found.tsx
+├── components/
+├── middleware.ts
+├── /api/auth/\[...nextauth].ts
+├── public/
+├── styles/
+├── .env.local
+├── README.md
+└── tsconfig.json
+
+````
+
+---
+
+## Kurulum
+
+### 1. Repositories
+
+```bash
+git clone https://github.com/mustafakaracuha/next-auth.git
+cd next-auth
+git checkout -b dev/v1.0.0
+````
+
+### 2. .env.local Ayarları
+
+```env
+AUTH0_CLIENT_ID=xxxxxx
+AUTH0_CLIENT_SECRET=xxxxxx
+AUTH0_ISSUER=https://your-tenant.auth0.com
+NEXTAUTH_SECRET=your_random_secret
+NEXTAUTH_URL=http://localhost:3000
+```
+
+### 3. Paketleri Yükle
+
+```bash
+npm install
+```
+
+### 4. Geliştirme Sunucusu
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🔐 Auth0 & NextAuth Entegrasyonu
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+* Auth0 Dashboard üzerinden bir uygulama oluştur
+* `Callback URL`: `http://localhost:3000/api/auth/callback/auth0`
+* `Allowed Logout URLs`: `http://localhost:3000`
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🧩 Role Tabanlı Yetkilendirme
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```ts
+// middleware.ts içinde
+if (pathname.startsWith("/admin") && !roles.includes("Admin")) {
+  return NextResponse.redirect("/unauthorized");
+}
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Role bilgisi, JWT token içinden alınır ve middleware tarafından işlenir.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🧪 Test Senaryoları
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+* [x] Giriş yapmamış kullanıcı `/dashboard` → redirect
+* [x] "user" rolündeki kullanıcı `/admin` → `/unauthorized`
+* [x] Admin kullanıcı `/admin` → erişim başarılı
+* [x] Invalid token → logout & redirect
+* [x] Yetkisiz erişim → `/unauthorized` sayfasına yönlendirme
+
+---
+
+## 🐳 Docker (Opsiyonel)
+
+```Dockerfile
+FROM node:18-alpine
+
+WORKDIR /app
+COPY . .
+RUN npm install
+EXPOSE 3000
+CMD ["npm", "run", "start"]
+```
+
+```bash
+docker build -t next-auth-app .
+docker run -p 3000:3000 next-auth-app
+```
+
+---
+
+## ✨ Ekran Görüntüsü
+
+![Login Sayfası](./public/screenshots/login-page.png)
+
+```
