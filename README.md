@@ -120,25 +120,6 @@ Role bilgisi, JWT token içinden alınır ve middleware tarafından işlenir.
 
 ---
 
-## 🐳 Docker (Opsiyonel)
-
-```Dockerfile
-FROM node:18-alpine
-
-WORKDIR /app
-COPY . .
-RUN npm install
-EXPOSE 3000
-CMD ["npm", "run", "start"]
-```
-
-```bash
-docker build -t next-auth-app .
-docker run -p 3000:3000 next-auth-app
-```
-
----
-
 ## ✨ Ekran Görüntüsü
 
 ![Login Sayfası](./public/screenshots/login-page.png)
