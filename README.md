@@ -122,6 +122,6 @@ Role bilgisi, JWT token içinden alınır ve middleware tarafından işlenir.
 
 ## ✨ Ekran Görüntüsü
 
-![Login Sayfası](./public/screenshots/login-page.png)
+![Login Sayfası](https://github.com/mustafakaracuha/next-auth/blob/prod/v1.0.0/src/assets/screenshots/login.png)
 
 ```
