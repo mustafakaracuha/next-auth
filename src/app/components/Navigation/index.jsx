@@ -1,3 +1,4 @@
+import { Bell } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -39,17 +40,28 @@ export default function Navigation() {
                   Admin Panel
                 </Link>
               )}
-              <div className="flex items-center space-x-2">
-                <span className="text-white">{session?.user?.name}</span>
-                {session?.user?.image && (
+              <div className="flex items-center space-x-3">
+                <div className="relative mr-4">
+                  <Bell className="w-5 h-5 text-white/70 hover:text-white cursor-pointer transition-colors" />
+                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></div>
+                </div>
+                {session.user?.image && (
                   <Image
                     src={session.user.image}
-                    alt={session.user.name || "Kullanıcı"}
-                    width={36}
-                    height={36}
-                    className="rounded-full border-2 border-white shadow-sm"
+                    alt={session.user.name || "Admin"}
+                    width={40}
+                    height={40}
+                    className="rounded-full border-2 border-gray-300"
                   />
                 )}
+                <div className="hidden md:block">
+                  <p className="text-white font-medium text-sm">
+                    {session.user?.name}
+                  </p>
+                  <p className="text-purple-300 text-xs">
+                    {session.user.roles}
+                  </p>
+                </div>
 
                 <button
                   onClick={() => signOut({ callbackUrl: "/login" })}

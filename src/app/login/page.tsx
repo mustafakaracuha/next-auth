@@ -17,7 +17,7 @@ export default function Page() {
   return (
     <>
       {/* Navigation */}
-      <Navigation />
+      {session && session.user && <Navigation />}
 
       {/* Main Content */}
       <main className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex flex-col items-center justify-center px-6 pt-16">
@@ -37,7 +37,7 @@ export default function Page() {
           ) : session ? (
             <>
               {/* Avatar */}
-              <div className="mx-auto mb-8 w-32 h-32 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 p-1 shadow-2xl">
+              <div className="mx-auto mb-6 w-32 h-32 rounded-full bg-gradient-to-r from-white to-gray-400 p-1 shadow-2xl">
                 <div className="w-full h-full rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center text-5xl font-bold text-white">
                   {session.user?.image ? (
                     <img
@@ -108,7 +108,7 @@ export default function Page() {
                 </Link>
                 {session.user?.roles?.includes("Admin") && (
                   <Link
-                    href="/settings"
+                    href="/admin"
                     className="group bg-white/10 hover:bg-white/20 text-white px-6 py-4 rounded-xl font-semibold transition-all duration-300 border border-white/20 hover:border-white/40"
                   >
                     <div className="flex items-center justify-center space-x-2">
