@@ -153,7 +153,11 @@ export default function Page() {
               </div>
 
               <button
-                onClick={() => signIn("auth0")}
+                onClick={() =>
+                  signIn("auth0", {
+                    callbackUrl: "/redirect", // Sonradan yönlendirme yapacağın ara sayfa
+                  })
+                }
                 className="group w-full py-4 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
               >
                 <div className="flex items-center justify-center space-x-2">

@@ -50,8 +50,8 @@ export default function Navigation() {
                   <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></div>
                 </div>
                 {session.user?.image && (
-                  <Image
-                    src={session.user.image}
+                  <img
+                    src={session.user?.image}
                     alt={session.user.name || "Admin"}
                     width={40}
                     height={40}
