@@ -20,7 +20,7 @@ export default function Navigation() {
 
           {session && (
             <div className="hidden md:flex items-center space-x-8">
-              {session.user?.roles?.includes("user") && (
+              {session.user?.roles?.includes("user" || "admin") && (
                 <>
                   <Link
                     href="/dashboard"
@@ -62,7 +62,7 @@ export default function Navigation() {
                   <p className="text-white font-medium text-sm">
                     {session.user?.name}
                   </p>
-                  <p className="text-purple-300 uppercase text-xs">
+                  <p className="text-purple-300 capitalize text-xs">
                     {session.user.roles}
                   </p>
                 </div>
