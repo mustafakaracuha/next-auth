@@ -62,7 +62,7 @@ export default function Navigation() {
                   <p className="text-white font-medium text-sm">
                     {session.user?.name}
                   </p>
-                  <p className="text-purple-300 text-xs">
+                  <p className="text-purple-300 uppercase text-xs">
                     {session.user.roles}
                   </p>
                 </div>
