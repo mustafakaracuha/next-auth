@@ -19,7 +19,7 @@ export default function RedirectPage() {
 
     const roles = session?.user?.roles ?? [];
 
-    if (roles.includes("Admin")) {
+    if (roles.includes("admin")) {
       setRedirectInfo({
         destination: "Admin Panel",
         icon: <Shield className="w-8 h-8 text-purple-400" />,

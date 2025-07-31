@@ -63,7 +63,7 @@ export default function Page() {
 
               {/* Quick Actions */}
               <div className="grid grid-cols-1 gap-4 mb-8">
-                {session.user?.roles?.includes("User") && (
+                {session.user?.roles?.includes("user") && (
                   <>
                     <Link
                       href="/dashboard"
@@ -112,7 +112,7 @@ export default function Page() {
                 )}
 
                 {/* Admin Link */}
-                {session.user?.roles?.includes("Admin") && (
+                {session.user?.roles?.includes("admin") && (
                   <Link
                     href="/admin"
                     className="group bg-white/10 hover:bg-white/20 text-white px-6 py-4 rounded-xl font-semibold transition-all duration-300 border border-white/20 hover:border-white/40"
