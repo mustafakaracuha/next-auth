@@ -106,7 +106,7 @@ if (pathname.startsWith("/admin") && !roles.includes("Admin")) {
 }
 ```
 
-Role bilgisi, JWT token içinden alınır ve middleware tarafından işlenir.
+Role bilgisi, kullanıcı yeni kayıtta User olarak atanır, JWT token içinden alınır ve middleware tarafından işlenir.
 
 ---
 
