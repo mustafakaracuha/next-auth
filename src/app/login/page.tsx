@@ -63,54 +63,23 @@ export default function Page() {
 
               {/* Quick Actions */}
               <div className="grid grid-cols-1 gap-4 mb-8">
-                {session.user?.roles?.includes("user") ||
-                  (session.user?.roles?.includes("admin") && (
-                    <>
-                      <Link
-                        href="/dashboard"
-                        className="group bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-6 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
-                      >
-                        <div className="flex items-center justify-center space-x-2">
-                          <svg
-                            className="w-5 h-5"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-                            />
-                          </svg>
-                          <span>Dashboard'a Git</span>
-                        </div>
-                      </Link>
-
-                      <Link
-                        href="/profile"
-                        className="group bg-white/10 hover:bg-white/20 text-white px-6 py-4 rounded-xl font-semibold transition-all duration-300 border border-white/20 hover:border-white/40"
-                      >
-                        <div className="flex items-center justify-center space-x-2">
-                          <svg
-                            className="w-5 h-5"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                            />
-                          </svg>
-                          <span>Profili Görüntüle</span>
-                        </div>
-                      </Link>
-                    </>
-                  ))}
+                {(session.user?.roles?.includes("user") ||
+                  session.user?.roles?.includes("admin")) && (
+                  <>
+                    <Link
+                      href="/dashboard"
+                      className="text-white/80 hover:text-white transition-colors duration-200"
+                    >
+                      Dashboard
+                    </Link>
+                    <Link
+                      href="/profile"
+                      className="text-white/80 hover:text-white transition-colors duration-200"
+                    >
+                      Profil
+                    </Link>
+                  </>
+                )}
 
                 {/* Admin Link */}
                 {session.user?.roles?.includes("admin") && (
