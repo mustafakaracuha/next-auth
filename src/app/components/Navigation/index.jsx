@@ -1,39 +1,12 @@
-"use client";
-
 import { Bell } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 export default function Navigation() {
   const { data: session, status } = useSession();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const pathname = usePathname();
-
-  // Link'in aktif olup olmadığını kontrol eden fonksiyon
-  const isActiveLink = (path) => {
-    return pathname === path;
-  };
-
-  // Aktif link için CSS sınıfları
-  const getLinkClasses = (path) => {
-    const baseClasses = "transition-colors duration-200";
-    const activeClasses = "text-white font-medium border-b-2 border-white pb-1";
-    const inactiveClasses = "text-white/80 hover:text-white";
-    
-    return `${baseClasses} ${isActiveLink(path) ? activeClasses : inactiveClasses}`;
-  };
-
-  // Mobile link için CSS sınıfları
-  const getMobileLinkClasses = (path) => {
-    const baseClasses = "block px-3 py-2 transition-colors duration-200";
-    const activeClasses = "text-white bg-white/20 rounded-lg font-medium";
-    const inactiveClasses = "text-white/80 hover:text-white hover:bg-white/10 rounded-lg";
-    
-    return `${baseClasses} ${isActiveLink(path) ? activeClasses : inactiveClasses}`;
-  };
 
   return (
     <nav className="fixed top-0 w-full bg-white/10 backdrop-blur-lg border-b border-white/20 z-50">
@@ -52,13 +25,13 @@ export default function Navigation() {
                 <>
                   <Link
                     href="/dashboard"
-                    className={getLinkClasses("/dashboard")}
+                    className="text-white/80 hover:text-white transition-colors duration-200"
                   >
                     Dashboard
                   </Link>
                   <Link
                     href="/profile"
-                    className={getLinkClasses("/profile")}
+                    className="text-white/80 hover:text-white transition-colors duration-200"
                   >
                     Profil
                   </Link>
@@ -68,7 +41,7 @@ export default function Navigation() {
               {session.user?.roles?.includes("admin") && (
                 <Link
                   href="/admin"
-                  className={getLinkClasses("/admin")}
+                  className="text-white/80 hover:text-white transition-colors duration-200"
                 >
                   Admin Panel
                 </Link>
@@ -134,29 +107,15 @@ export default function Navigation() {
       {isMenuOpen && session && (
         <div className="md:hidden bg-white/10 backdrop-blur-lg border-t border-white/20">
           <div className="px-2 pt-2 pb-3 space-y-1">
-            <Link 
-              href="/dashboard" 
-              className={getMobileLinkClasses("/dashboard")}
-            >
+            <Link href="/dashboard" className="block px-3 py-2 text-white/80">
               Dashboard
             </Link>
-            <Link 
-              href="/profile" 
-              className={getMobileLinkClasses("/profile")}
-            >
+            <Link href="/profile" className="block px-3 py-2 text-white/80">
               Profil
             </Link>
-            {session.user?.roles?.includes("admin") && (
-              <Link 
-                href="/admin" 
-                className={getMobileLinkClasses("/admin")}
-              >
-                Admin Panel
-              </Link>
-            )}
             <button
               onClick={() => signOut({ callbackUrl: "/login" })}
-              className="block w-full text-left px-3 py-2 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-colors duration-200"
+              className="block w-full text-left px-3 py-2 text-white/80"
             >
               Çıkış
             </button>
