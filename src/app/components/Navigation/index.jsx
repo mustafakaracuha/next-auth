@@ -113,6 +113,11 @@ export default function Navigation() {
             <Link href="/profile" className="block px-3 py-2 text-white/80">
               Profil
             </Link>
+            {session.user?.roles?.includes("admin") && (
+              <Link href="/admin" className="block px-3 py-2 text-white/80">
+                Admin Panel
+              </Link>
+            )}
             <button
               onClick={() => signOut({ callbackUrl: "/login" })}
               className="block w-full text-left px-3 py-2 text-white/80"
