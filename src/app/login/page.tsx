@@ -182,6 +182,17 @@ export default function Page() {
                 <p className="text-white/50 text-sm">
                   Güvenli ve hızlı giriş için NextAuth kullanıyoruz
                 </p>
+                <div className="mt-4 bg-white/5 p-4 rounded-lg border border-white/10 text-sm text-white">
+                  <p className="font-semibold mb-1">🛠 Test Admin Hesabı</p>
+                  <p>
+                    <span className="text-white/70">Email:</span>{" "}
+                    mustafakaracuha@gmail.com
+                  </p>
+                  <p>
+                    <span className="text-white/70">Şifre:</span>{" "}
+                    u3@wFdeyY8E!2Y9
+                  </p>
+                </div>
               </div>
             </>
           )}
