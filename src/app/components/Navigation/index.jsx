@@ -20,7 +20,7 @@ export default function Navigation() {
 
           {session && (
             <div className="hidden md:flex items-center space-x-8">
-              {session.user?.roles?.includes("user" || "admin") && (
+              {session.user?.roles?.includes("user") && session.user?.roles?.includes("admin") && (
                 <>
                   <Link
                     href="/dashboard"

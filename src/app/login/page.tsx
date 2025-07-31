@@ -63,7 +63,7 @@ export default function Page() {
 
               {/* Quick Actions */}
               <div className="grid grid-cols-1 gap-4 mb-8">
-                {session.user?.roles?.includes("user") && (
+                {session.user?.roles?.includes("user") && session.user?.roles?.includes("admin") && (
                   <>
                     <Link
                       href="/dashboard"
