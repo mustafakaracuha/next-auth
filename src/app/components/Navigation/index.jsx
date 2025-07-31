@@ -20,7 +20,7 @@ export default function Navigation() {
 
           {session && (
             <div className="hidden md:flex items-center space-x-8">
-              {session.user?.roles?.includes("User") && (
+              {session.user?.roles?.includes("user") && (
                 <>
                   <Link
                     href="/dashboard"
@@ -36,7 +36,7 @@ export default function Navigation() {
                   </Link>
                 </>
               )}
-              {session.user?.roles?.includes("Admin") && (
+              {session.user?.roles?.includes("admin") && (
                 <Link
                   href="/admin"
                   className="text-white/80 hover:text-white transition-colors duration-200"
@@ -52,7 +52,7 @@ export default function Navigation() {
                 {session.user?.image && (
                   <img
                     src={session.user?.image}
-                    alt={session.user.name || "Admin"}
+                    alt={session.user.name || "admin"}
                     width={40}
                     height={40}
                     className="rounded-full border-2 border-gray-300"
