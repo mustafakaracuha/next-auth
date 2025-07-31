@@ -23,7 +23,7 @@ export async function middleware(req: NextRequest) {
   if (pathname.startsWith("/admin")) {
     const roles: string[] = Array.isArray(token?.roles) ? token?.roles : [];
 
-    if (!roles.includes("Admin")) {
+    if (!roles.includes("user")) {
       const unauthorizedUrl = req.nextUrl.clone();
       unauthorizedUrl.pathname = "/unauthorized";
       return NextResponse.redirect(unauthorizedUrl);
@@ -33,7 +33,7 @@ export async function middleware(req: NextRequest) {
   if (pathname.startsWith("/profile") || pathname.startsWith("/dashboard")) {
     const roles: string[] = Array.isArray(token?.roles) ? token?.roles : [];
 
-    if (!roles.includes("User")) {
+    if (!roles.includes("user")) {
       const unauthorizedUrl = req.nextUrl.clone();
       unauthorizedUrl.pathname = "/unauthorized";
       return NextResponse.redirect(unauthorizedUrl);
