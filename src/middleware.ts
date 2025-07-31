@@ -10,7 +10,6 @@ export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   console.log(token, "Token:", pathname, "Pathname:", req.nextUrl);
-  
 
   // Eğer token yoksa, giriş sayfasına yönlendiriyoruz
   if (req.nextUrl.pathname === "/") {
@@ -33,7 +32,7 @@ export async function middleware(req: NextRequest) {
   if (pathname.startsWith("/profile") || pathname.startsWith("/dashboard")) {
     const roles: string[] = Array.isArray(token?.roles) ? token?.roles : [];
 
-    if (roles.includes("user") && !roles.includes("admin")) {
+    if (!roles.includes("user") && !roles.includes("admin")) {
       const unauthorizedUrl = req.nextUrl.clone();
       unauthorizedUrl.pathname = "/unauthorized";
       return NextResponse.redirect(unauthorizedUrl);
